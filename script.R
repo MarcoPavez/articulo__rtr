@@ -4,6 +4,7 @@
 library(tidyverse)
 library(readxl)
 library(sf)
+library(viridis)
 
 # Importación de bases de datos -------------------------------------------
 
@@ -40,9 +41,17 @@ shp_ohiggins <- shp_nacional %>% filter(region=="Región del Libertador Bernardo
 
 pago_cnr_comunal <- cnr_ohiggins %>% group_by(comuna) %>% summarise(pago_uf = sum(pago_uf)) # monto total de las transferencias de la ley 18.450 según comunas de la región de O'Higgins
 
+union <- shp_ohiggins %>% left_join(pago_cnr_comunal)
 
-
-
+ggplot(data = union) +
+  geom_sf(aes(fill = pago_uf)) +
+  labs(fill = "Transferencias en UF", options(scipen = 4)) +
+  theme_void() +
+  labs(title = "Distribución espacial de las transferencias asociadas a la ley N° 18.450",
+       subtitle = "Comunas de la región de O´Higgins, 1990-2019",
+       caption = "Fuente: Elaboración propia en base a datos de solicitud 
+                  de transparencia con folio N° AR002T0001380") +
+  scale_fill_viridis_c()
 
 
 
