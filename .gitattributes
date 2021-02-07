@@ -1,2 +1,4 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+git rm <AR002T0001380.xlsx>
+
